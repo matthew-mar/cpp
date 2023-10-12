@@ -1,6 +1,5 @@
 #include <vector>
 #include <fstream>
-#include <iostream>
 
 struct Student {
     int grade;
