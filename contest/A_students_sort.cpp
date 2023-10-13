@@ -1,5 +1,7 @@
 #include <vector>
 #include <fstream>
+#include <iostream>
+#include <sstream>
 
 struct Student {
     int grade;
@@ -8,15 +10,21 @@ struct Student {
 
 std::vector<Student> readStudents() {
     std::vector<Student> students;
-    char sep = ' ';
 
     std::ifstream inputFile("input.txt");
-    while (! inputFile.eof()) {
+    if (inputFile.is_open()) {
         Student s;
-        inputFile >> s.grade >> sep >> s.name;
-        students.push_back(s);
+
+        while (inputFile >> s.grade) {
+            std::getline(inputFile >> std::ws, s.name);
+
+            students.push_back(s);
+        }
+
+        inputFile.close();
+    } else {
+        std::cout << "Error opening input file." << std::endl;
     }
-    inputFile.close();
 
     return students;
 }
@@ -49,6 +57,11 @@ void writeStudents(std::vector<Student>& students) {
 
 int main() {
     std::vector<Student> students = readStudents();
+
+    for (Student s : students) {
+        std::cout << s.name << std::endl;
+    }
+
     sortStudents(students);
     writeStudents(students);
     return 0;
