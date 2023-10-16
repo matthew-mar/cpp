@@ -70,7 +70,5 @@ int main() {
         std::cout << s;
     }
 
-    std::cout << std::endl;
-
     return 0;
 }
