@@ -1,5 +1,6 @@
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 int main() {
     std::ifstream inputFile("input.txt");
