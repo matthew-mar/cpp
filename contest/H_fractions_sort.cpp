@@ -1,5 +1,4 @@
 #include <vector>
-#include <fstream>
 #include <iostream>
 
 int gcd(int a, int b) {
@@ -34,30 +33,26 @@ void sortFractions(std::vector<std::pair<int, int>>& fractions) {
 }
 
 int main() {
-    std::ifstream inputFile("input.txt");
-
     int n;
-    inputFile >> n;
+    std::cin >> n;
 
     int q;
-    inputFile >> q;
+    std::cin >> q;
 
     std::vector<int> a(n);
     for (int i = 0; i < n; i++) {
-        inputFile >> a[i];
+        std::cin >> a[i];
     }
 
     std::vector<int> b(n);
     for (int i = 0; i < n; i++) {
-        inputFile >> b[i];
+        std::cin >> b[i];
     }
 
     std::vector<int> c(q);
     for (int i = 0; i < q; i++) {
-        inputFile >> c[i];
+        std::cin >> c[i];
     }
-
-    inputFile.close();
 
     std::vector<std::pair<int, int>> fractions;
     for (int i : a) {
@@ -68,9 +63,8 @@ int main() {
 
     sortFractions(fractions);
 
-    std::ofstream outputFile("output.txt");
     for (int cj : c) {
-        outputFile << fractions[cj - 1].first << " " << fractions[cj - 1].second << std::endl;
+        std::cout << fractions[cj - 1].first << " " << fractions[cj - 1].second << std::endl;
     }
 
     return 0;
