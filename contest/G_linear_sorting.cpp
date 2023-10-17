@@ -1,5 +1,6 @@
 #include <cmath>
 #include <vector>
+#include <fstream>
 #include <iostream>
 
 unsigned int cur = 0;
@@ -14,65 +15,57 @@ unsigned int nextRand32(int x, int y) {
     return (a << 8) ^ b;
 }
 
-void radixSort(std::vector<int>& numbers, int N)
+void radix_sort(unsigned int *A, int N)
 {
-    std::vector<int> zeros(N);
-    std::vector<int> ones(N);
-
-    for (int radix = 0; radix < 32; radix++) {
-        int z_i = 0;
-        int o_i = 0;
-
-        for (int i = 0; i < N; i++) {
-            if ((numbers[i] & (1 << radix)) == 0) {
-                zeros[z_i++] = numbers[i];
-            } else {
-                ones[o_i++] = numbers[i];
-            }
+    unsigned int *a0 = new unsigned int[N];
+    unsigned int *a1 = new unsigned int[N];
+    
+    for(int radix = 0; radix < 32; radix++) {
+        int a0_size = 0;
+        int a1_size = 0;
+        for(int i = 0; i < N; i++) {
+            if ((A[i] & (1 << radix)) == 0)
+                a0[a0_size++] = A[i];
+            else
+                a1[a1_size++] = A[i];
         }
-
-        for (int i = 0; i < z_i; i++) {
-            numbers[i] = zeros[i];
-        }
-
-        for (int i = 0; i < o_i; i++) {
-            numbers[i] = ones[i];
-        }
+        for(int i = 0; i < a0_size; i++)
+            A[i] = a0[i];
+        for(int i = 0; i < a1_size; i++)
+            A[a0_size + i] = a1[i];
     }
-
-    zeros.clear();
-    ones.clear();
+    delete[] a0;
+    delete[] a1;
 }
 
 int main() {
-    int t;
-    int n;
+    std::ifstream inputFile("input.txt");
 
-    std::cin >> t;
-    std::cin >> n;
+    int t;
+    inputFile >> t;
+
+    int n;
+    inputFile >> n;
 
     int a;
+    inputFile >> a;
+
     int b;
+    inputFile >> b;
 
-    std::cin >> a;
-    std::cin >> b;
-
-    for (int i = 0; i < t; i++) {
-        // fill array
-        std::vector<int> numbers(n);
+    for (int testCount = 0; testCount < t; testCount++) {
+        unsigned int A[n];
         for (int i = 0; i < n; i++) {
-            numbers[i] = nextRand32(a, b);
+            A[i] = nextRand32(a, b);
         }
 
-        radixSort(numbers, n);
+        radix_sort(A, n);
 
-        int sum = 0;
-        for (int k = 1; k < n; k++) {
-            sum += numbers[k] * k;
+        long long s = 0;
+        for (int i = 0; i < n; i++) {
+            s = s + (long long)A[i] * (i + 1);
         }
 
-        std::cout << sum << std::endl;
+        std::cout << s << std::endl;
     }
-
-    return 0;
 }
