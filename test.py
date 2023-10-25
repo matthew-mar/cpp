@@ -1,11 +1,14 @@
-arr = [12, 130926, 3941054950, 2013898548, 197852696, 2753287507]
+n, m = map(int, input().split())
 
-arr.sort()
+nums = list(map(int, input().split()))
 
-print(arr)
+for _ in range(m):
+    query = input().split()
+    if query[0] == "del":
+        del nums[int(query[1]) - 1]
+    elif query[0] == "add":
+        nums.insert(int(query[1]), int(query[2]))
+        print(nums)
 
-s = 0
-for i in range(0, len(arr)):
-    s = s + arr[i] * (i + 1)
-    print(arr[i], s)
-print(s)
+print(len(nums))
+print(*nums)
