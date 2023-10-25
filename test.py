@@ -1,14 +1,6 @@
-n, m = map(int, input().split())
+can_be = ["i", "i+1", "i-1"]
 
-nums = list(map(int, input().split()))
-
-for _ in range(m):
-    query = input().split()
-    if query[0] == "del":
-        del nums[int(query[1]) - 1]
-    elif query[0] == "add":
-        nums.insert(int(query[1]), int(query[2]))
-        print(nums)
-
-print(len(nums))
-print(*nums)
+for x1 in can_be:
+    for x2 in can_be:
+        for x3 in can_be:
+            print(x1, x2, x3)
